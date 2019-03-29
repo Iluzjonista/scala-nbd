@@ -1,3 +1,4 @@
+import scala.collection.immutable.Range.Inclusive
 object HelloWorld {
    def main(args: Array[String]) {
        
@@ -31,6 +32,9 @@ object HelloWorld {
     println("Liczby po operacji zwiększenia: " + listaZwieksz(liczby9))
     println("------------------")
     println("Zadanie 10") 
+    val liczby10 = List(11, -22, -3, 4, -2, 0, 7, 26, 12, -5, -12)
+    println("Liczby przed: " + liczby10)
+    println("Liczby po: " + wartBezw(liczby10))
     
    }
    
@@ -38,17 +42,17 @@ object HelloWorld {
 
 def listaBezZer(liczby : List[Int]): List[Int] = {
     liczby.filterNot (_==0)
-}
+  }
 //---------zadanie9---------
 def listaZwieksz(liczby : List[Int]): List[Int] = {
     liczby.map((i) => i+1)
-}
+  }
 //---------zadanie10---------
-/*def wartBezw(liczby : List[Int]): List[Int] = {
-    liczby.
-}*/
+def wartBezw(liczby : List[Int]): List[Int] = {
+  
+  liczby.filter(-5<=_).filter(_<=12).map (_ abs)
+  }
 }
-
 //---------zadanie6---------
 class KontoBankowe(private var stanKonta: Int = 0){
   def getstanKonta = stanKonta
