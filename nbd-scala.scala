@@ -1,7 +1,65 @@
-import scala.collection.immutable.Range.Inclusive
+import scala.annotation.tailrec
 object HelloWorld {
    def main(args: Array[String]) {
-       
+   
+    val dniTygodnia = List("Poniedzialek", "Wtorek", "Sroda", "Czwartek", "Piatek", "Sobota", "Niedziela")   
+    println("------------------")
+    println("Zadanie 1a")
+    for (i <- dniTygodnia) { println(i) }
+    println("------------------")
+    println("Zadanie 1b")
+    for (i <- dniTygodnia) {          
+          if(i.startsWith("P"))
+          println(i)          
+      }
+    println("------------------")
+    println("Zadanie 1c")
+    dniTygodnia.foreach { println }
+    println("------------------")
+    println("Zadanie 1d")
+    var i :Int = 0;
+    while(i < dniTygodnia.length){            
+            println(dniTygodnia(i))
+            i = i + 1
+        }
+    println("------------------")
+    println("Zadanie 1e")
+    println("Rekurencyjnie: ")
+    println(rekurencja(dniTygodnia))
+    println("------------------")
+    println("Zadanie 1f")
+    println("Rekurencyjnie w drugą stronę: ")
+    println(rekurencja2(dniTygodnia))
+    println("------------------")
+    println("Zadanie 1g")
+    val foldleft = dniTygodnia.foldLeft[String]("") { (_+_+", ") }
+		println(foldleft)
+    val foldright = dniTygodnia.foldRight[String]("") {(_+", "+_)}
+		println(foldright)
+    println("------------------")
+    println("Zadanie 1h")
+    val flp = dniTygodnia.foldLeft[String]("") { (z,f) => if(f.startsWith("P")) z+f+", " else z }
+		println(flp)
+    println("------------------")
+    println("Zadanie 2")
+    val product = Map("woda" -> 1, "mąka" -> 3, "chleb" -> 2, "cukierek" -> 120)
+		println(product)
+    val product2 = product map {case (key, value) => (key, value + 0.1*value)}
+    println(product2)
+    println("------------------")
+    println("Zadanie 3")
+    val krotka = ("to jest krotka", 1, 2.4)
+    krotkaWypisz(krotka)
+    println("------------------")
+    println("Zadanie 4")
+    val ulica = Map("Zajezdnia" -> "Woronicza", "Przystanek" -> "Puławska")
+    println("Zajezdnia znajduje się na ulicy: "+ ulica.get("Zajezdnia")+", a przystanek jest na ulicy: " + ulica.get("Przystanek")+ " a pasażer jest: " + ulica.get("Pasazer"))
+    println("------------------")
+    println("Zadanie 5")
+    val d1 = "Sobota"
+    val d2 = "Wtorek"
+    val d3 = "Nie wiem"
+    println(jakiDzien(d1),jakiDzien(d2),jakiDzien(d3))
     println("------------------")
     println("Zadanie 6") 
     val konto1 = new KontoBankowe()
@@ -16,7 +74,7 @@ object HelloWorld {
     println("------------------") 
     println("Zadanie 7") 
     val osoba1 = new Osoba("Jan", "Kowalski")
-	println(Osoba.p(osoba1))
+    println(Osoba.p(osoba1))
     val osoby = List(new Osoba("Andrzej", "Markowski"), new Osoba("Jan", "Kich"), new Osoba("Marek", "Koterski"), new Osoba("Adam", "Stepien"), new Osoba("Maria", "Kas"))
     osoby.foreach(osoba => println(Osoba p osoba))
     
@@ -37,22 +95,33 @@ object HelloWorld {
     println("Liczby po: " + wartBezw(liczby10))
     
    }
-   
-//---------zadanie8---------
-
-def listaBezZer(liczby : List[Int]): List[Int] = {
-    liczby.filterNot (_==0)
-  }
-//---------zadanie9---------
-def listaZwieksz(liczby : List[Int]): List[Int] = {
-    liczby.map((i) => i+1)
-  }
-//---------zadanie10---------
-def wartBezw(liczby : List[Int]): List[Int] = {
-  
-  liczby.filter(-5<=_).filter(_<=12).map (_ abs)
-  }
+//---------zadanie1e---------
+def rekurencja (list: List[String]): String={
+        if (list.isEmpty)
+            ""
+        else list.head + ", " + rekurencja(list.tail)
+    }
+//---------zadanie1f---------   
+def rekurencja2 (list: List[String]): String={
+        if (list.isEmpty)
+            ""
+        else list.last + ", " + rekurencja2(list.init)
+    }
+//---------zadanie3---------
+def krotkaWypisz (krotka: (String, Int, Double)): Unit={
+println("String: " + krotka._1, "Int: " + krotka._2, "Double: " + krotka._3) 
 }
+//---------zadanie5---------
+def jakiDzien(dzienTydzien: String): String = dzienTydzien match {
+    case "Poniedzialek" => "Praca"
+    case "Wtorek" => "Praca"
+    case "Sroda" => "Praca"
+    case "Czwartek" => "Praca"
+    case "Piatek" => "Praca"
+    case "Sobota" => "Weekend"
+    case "Niedziela" => "Weekend"
+    case _ => "Nie ma takiego dnia, więc zarządzam wolne"
+  }
 //---------zadanie6---------
 class KontoBankowe(private var stanKonta: Int = 0){
   def getstanKonta = stanKonta
@@ -65,7 +134,6 @@ class KontoBankowe(private var stanKonta: Int = 0){
     this.stanKonta -= i
   }
 }
-
 //---------zadanie7---------
 
 class Osoba(var imie:String, var nazwisko:String){
@@ -82,3 +150,19 @@ object Osoba{
         }
     }
 }
+//---------zadanie8---------
+
+def listaBezZer(liczby : List[Int]): List[Int] = {
+    liczby.filterNot (_==0)
+  }
+//---------zadanie9---------
+def listaZwieksz(liczby : List[Int]): List[Int] = {
+    liczby.map((i) => i+1)
+  }
+//---------zadanie10---------
+def wartBezw(liczby : List[Int]): List[Int] = {
+  
+  liczby.filter(-5<=_).filter(_<=12).map (_ abs)
+  }
+}
+
