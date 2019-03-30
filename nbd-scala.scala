@@ -44,7 +44,7 @@ object HelloWorld {
     println("Zadanie 2")
     val product = Map("woda" -> 1, "mąka" -> 3, "chleb" -> 2, "cukierek" -> 120)
 		println(product)
-    val product2 = product map {case (key, value) => (key, value + 0.1*value)}
+    val product2 = product map {case (key, value) => (key, 0.9*value)}
     println(product2)
     println("------------------")
     println("Zadanie 3")
