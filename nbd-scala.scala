@@ -73,10 +73,18 @@ object HelloWorld {
     println(konto1.getstanKonta)
     println("------------------") 
     println("Zadanie 7") 
-    val osoba1 = new Osoba("Jan", "Kowalski")
-    println(Osoba.p(osoba1))
-    val osoby = List(new Osoba("Andrzej", "Markowski"), new Osoba("Jan", "Kich"), new Osoba("Marek", "Koterski"), new Osoba("Adam", "Stepien"), new Osoba("Maria", "Kas"))
-    osoby.foreach(osoba => println(Osoba p osoba))
+    case class Message(imie:String, nazwisko:String){}
+       
+ def sayHi(p:Message) = p match{
+     case Message ("Andrzej", _) => "Cześć Andrzej, jak mija Twój dzień?"
+     case Message (_, "Stepien") => "Cześć brat!"
+     case Message ("Marek", _) => "Witaj Marku, udany dzień?"
+     case _ => "no hejka"
+}   
+   
+    val osoby1 = List(new Message("Andrzej", "Markowski"), new Message("Jan", "Kich"), new Message("Marek", "Koterski"), new Message("Adam", "Stepien"), new Message("Maria", "Kas"))
+    
+    osoby1.foreach(osoba1 => println(sayHi(osoba1)))
     
     println("------------------")
     println("Zadanie 8")     
@@ -133,21 +141,23 @@ class KontoBankowe(private var stanKonta: Int = 0){
   def wyplata(i: Int): Unit = {
     this.stanKonta -= i
   }
-}       
-case class Message(imie:String, nazwisko:String){}
-       
- def sayHi(p:Message) = p match{
-     case Message ("Andrzej", _) => "Cześć Andrzej, jak mija Twój dzień?"
-     case Message (_, "Stepien") => "Cześć brat!"
-     case Message ("Marek", _) => "Witaj Marku, udany dzień?"
-     case _ => "no hejka"
-}   
-   
-    println("------------------") 
-    println("Zadanie 7") 
-    val osoby1 = List(new Message("Andrzej", "Markowski"), new Message("Jan", "Kich"), new Message("Marek", "Koterski"), new Message("Adam", "Stepien"), new Message("Maria", "Kas"))
-    
-    osoby1.foreach(osoba1 => println(sayHi(osoba1)))
+}
+//---------zadanie7---------
+
+class Osoba(var imie:String, var nazwisko:String){
+}
+
+object Osoba{
+    def p(x: Osoba): String = {
+        x match {
+            case andrzej if x.imie == "Andrzej" => "Cześć Andrzej, jak mija Twój dzień?"
+            case stepien if x.nazwisko == "Stepien" => "Cześć brat!"
+            case marek if x.imie == "Marek" => "Witaj Marku, udany dzień?"
+            case _ => "no hejka"
+            
+        }
+    }
+}
 //---------zadanie8---------
 
 def listaBezZer(liczby : List[Int]): List[Int] = {
